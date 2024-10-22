@@ -1,11 +1,8 @@
 import pandas as pd
-import pyarrow # not needed, but it's a good practice to import it
-import numpy as np # numpy has more efficient functions for numerical operations especially for large datasets
-
-# The file at this URL contains a large data set. It must be downloadable and in CSV format to be read by pandas.
+import pyarrow
+import numpy as np 
 url = "https://drive.google.com/uc?id=1ujY0WCcePdotG2xdbLyeECFW9lCJ4t-K"
 
-# Set display option to show all columns
 pd.set_option('display.max_columns', None)
 # Set output format for float values to 2 decimal places
 pd.set_option("display.float_format", "${:,.2f}".format)
