@@ -1,0 +1,138 @@
+{
+  "General Knowledge": [
+    {
+      "question": "What is the capital of Hawaii?",
+      "options": ["Honolulu", "Hilo", "Oahu", "Ewa Beach"],
+      "correct": "Honolulu",
+      "explanation": "Honolulu is the capital of Hawaii and the largest city on the island of Oahu."
+    },
+    {
+      "question": "Who is the founder of Amazon?",
+      "options": ["Jeff Bezos", "Elon Musk", "Bill Gates", "Ronald McDonald"],
+      "correct": "Jeff Bezos",
+      "explanation": "Jeff Bezos was the founder and former CEO of Amazon."
+    },
+    {
+      "question": "What are the universities in Oahu?",
+      "options": ["Manoa", "West Oahu", "Kapiolani", "Leeward"],
+      "correct": ["Manoa", "West Oahu"],
+      "explanation": "Both Manoa and West Oahu are part of the University of Hawaii system and are located in Oahu."
+    },
+    {
+      "question": "What is the first fast food chicken store?",
+      "options": ["KFC", "Popeyes", "Chick-fil-A", "Canes"],
+      "correct": "KFC",
+      "explanation": "KFC, founded by Colonel Sanders, is widely recognized as the first fast food restaurant specializing in fried chicken."
+    },
+    {
+      "question": "When was the constitution signed?",
+      "options": ["1786", "1787", "1776", "1778"],
+      "correct": "1787",
+      "explanation": "The U.S. Constitution was signed in 1787, after the American Revolution."
+    }
+  ],
+  "Finance": [
+    {
+      "question": "What is the term for spreading investments to reduce risk?",
+      "options": ["Diversification", "Hedging", "Liquidity", "Leverage"],
+      "correct": "Diversification",
+      "explanation": "Diversification involves spreading investments across different assets to reduce exposure to any single risk."
+    },
+    {
+      "question": "What does 'ROI' stand for?",
+      "options": ["Rate of Investment", "Return on Investment", "Reserve of Income", "Risk on Investment"],
+      "correct": "Return on Investment",
+      "explanation": "ROI stands for 'Return on Investment,' which measures the profitability of an investment."
+    },
+    {
+      "question": "Which type of account earns interest but has limited withdrawals?",
+      "options": ["Checking Account", "Savings Account", "Brokerage Account", "Retirement Account"],
+      "correct": "Savings Account",
+      "explanation": "Savings accounts typically earn interest but limit the number of withdrawals allowed monthly."
+    },
+    {
+      "question": "What is a bull market?",
+      "options": ["A market with declining prices", "A market with rising prices", "A market with stable prices", "A market with high inflation"],
+      "correct": "A market with rising prices",
+      "explanation": "A bull market refers to a market condition where prices are generally on the rise, reflecting investor confidence."
+    }
+  ],
+  "Japanese Culture": [
+    {
+      "question": "What is Japan's national flower?",
+      "options": ["Cherry Blossom", "Lotus", "Chrysanthemum", "Peony"],
+      "correct": "Cherry Blossom",
+      "explanation": "The cherry blossom, or 'sakura,' is a beloved symbol of Japan, representing beauty and the fleeting nature of life."
+    },
+    {
+      "question": "What is the traditional Japanese art of paper folding called?",
+      "options": ["Ikebana", "Origami", "Shodo", "Kabuki"],
+      "correct": "Origami",
+      "explanation": "Origami is the art of paper folding, used to create intricate shapes and figures without cutting or gluing."
+    },
+    {
+      "question": "What is the staple ingredient in most Japanese meals?",
+      "options": ["Rice", "Noodles", "Fish", "Soy Sauce"],
+      "correct": "Rice",
+      "explanation": "Rice is the staple food in Japan, often served with every meal and used in a variety of traditional dishes."
+    },
+    {
+      "question": "What does the Japanese word 'arigatou' mean?",
+      "options": ["Hello", "Thank you", "Goodbye", "Excuse me"],
+      "correct": "Thank you",
+      "explanation": "'Arigatou' is a common Japanese expression of gratitude meaning 'thank you.'"
+    }
+  ],
+  "Exercise": [
+    {
+      "question": "What is the primary benefit of cardiovascular exercise?",
+      "options": ["Building muscle", "Improving heart health", "Increasing flexibility", "Enhancing focus"],
+      "correct": "Improving heart health",
+      "explanation": "Cardiovascular exercise strengthens the heart and improves blood circulation, reducing the risk of heart disease."
+    },
+    {
+      "question": "What does 'HIIT' stand for in fitness?",
+      "options": ["High Intensity Interval Training", "Heavy Integrated Intensity Training", "Health Improvement Intense Training", "Hyper Interval Innovation Training"],
+      "correct": "High Intensity Interval Training",
+      "explanation": "'HIIT' involves short bursts of intense exercise followed by rest or low-intensity periods, boosting calorie burn."
+    },
+    {
+      "question": "Which exercise targets the biceps?",
+      "options": ["Push-ups", "Squats", "Bicep Curls", "Planks"],
+      "correct": "Bicep Curls",
+      "explanation": "Bicep curls specifically target the biceps, helping to strengthen and tone the upper arm muscles."
+    },
+    {
+      "question": "How many minutes of moderate exercise per week are recommended for adults?",
+      "options": ["60", "150", "200", "300"],
+      "correct": "150",
+      "explanation": "The WHO recommends at least 150 minutes of moderate aerobic activity per week for adults to maintain good health."
+    }
+  ],
+  "College Life": [
+    {
+      "question": "What is the term for a student’s official record of grades?",
+      "options": ["Transcript", "Curriculum", "Degree Plan", "Syllabus"],
+      "correct": "Transcript",
+      "explanation": "A transcript is the official record of a student's academic performance and grades in college."
+    },
+    {
+      "question": "What is FAFSA used for?",
+      "options": ["Applying for scholarships", "Applying for federal student aid", "Applying for student loans", "Applying for internships"],
+      "correct": "Applying for federal student aid",
+      "explanation": "FAFSA (Free Application for Federal Student Aid) is used to apply for financial aid from the U.S. government for college."
+    },
+    {
+      "question": "What is a common requirement for graduate school admission?",
+      "options": ["Undergraduate degree", "Personal statement", "Standardized test scores", "All of the above"],
+      "correct": "All of the above",
+      "explanation": "Graduate schools often require an undergraduate degree, personal statement, and standardized test scores like GRE or GMAT."
+    },
+    {
+      "question": "What is a 'major' in college?",
+      "options": ["A specialization in a subject", "A required course for graduation", "A type of scholarship", "A type of degree"],
+      "correct": "A specialization in a subject",
+      "explanation": "A 'major' is the primary subject or field of study that a student focuses on during their college education."
+    }
+  ]
+}

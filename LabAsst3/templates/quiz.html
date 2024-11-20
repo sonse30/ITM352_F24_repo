@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz</title>
+</head>
+<body>
+    <h1>Take the Quiz!</h1>
+    <form action="{{ url_for('quiz') }}" method="POST">
+        {% for category, category_questions in questions.items() %}
+            <h3>{{ category }}</h3>
+            {% for q in category_questions %}
+                <div>
+                    <p>{{ q['question'] }}</p>
+                    {% for option in q['options'] %}
+                        <input type="radio" name="question_{{ q['question'] }}" value="{{ option }}">
+                        <label>{{ option }}</label><br>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        {% endfor %}
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>

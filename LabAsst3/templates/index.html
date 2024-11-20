@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz App - Welcome</title>
+</head>
+<body>
+    <h1>Welcome to the Quiz!</h1>
+    {% if user_name %}
+        <p>Welcome back, {{ user_name }}!</p>
+    {% else %}
+        <form action="{{ url_for('index') }}" method="POST">
+            <label for="user_name">Enter your name:</label>
+            <input type="text" id="user_name" name="user_name" required>
+            <button type="submit">Start Quiz</button>
+        </form>
+    {% endif %}
+    <a href="{{ url_for('quiz') }}">Start Quiz</a>
+</body>
+</html>

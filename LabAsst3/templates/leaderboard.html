@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaderboard</title>
+</head>
+<body>
+    <h1>Leaderboard</h1>
+    {% if leaderboard %}
+        <ul>
+            {% for entry in leaderboard %}
+                <li>{{ entry.name }}: {{ entry.score }} points</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No scores yet! Be the first to take the quiz.</p>
+    {% endif %}
+
+    <a href="{{ url_for('index') }}">Back to Home</a>
+</body>
+</html>
