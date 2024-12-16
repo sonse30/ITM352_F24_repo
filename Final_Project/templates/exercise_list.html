@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercise List</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+        }
+        .container {
+            margin-top: 30px;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Exercise List</h1>
+        <p class="text-center">Explore different exercises for various body parts.</p>
+
+        <div class="accordion" id="exerciseAccordion">
+            <!-- Chest -->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingChest">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseChest" aria-expanded="true" aria-controls="collapseChest">
+                        Chest Exercises
+                    </button>
+                </h2>
+                <div id="collapseChest" class="accordion-collapse collapse show" aria-labelledby="headingChest" data-bs-parent="#exerciseAccordion">
+                    <div class="accordion-body">
+                        <ul>
+                            <li>Bench Press</li>
+                            <li>Push-ups</li>
+                            <li>Incline Dumbbell Press</li>
+                            <li>Chest Fly Machine</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Back -->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingBack">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseBack" aria-expanded="false" aria-controls="collapseBack">
+                        Back Exercises
+                    </button>
+                </h2>
+                <div id="collapseBack" class="accordion-collapse collapse" aria-labelledby="headingBack" data-bs-parent="#exerciseAccordion">
+                    <div class="accordion-body">
+                        <ul>
+                            <li>Pull-ups</li>
+                            <li>Deadlifts</li>
+                            <li>Lat Pulldowns</li>
+                            <li>Barbell Rows</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Legs -->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingLegs">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseLegs" aria-expanded="false" aria-controls="collapseLegs">
+                        Leg Exercises
+                    </button>
+                </h2>
+                <div id="collapseLegs" class="accordion-collapse collapse" aria-labelledby="headingLegs" data-bs-parent="#exerciseAccordion">
+                    <div class="accordion-body">
+                        <ul>
+                            <li>Squats</li>
+                            <li>Lunges</li>
+                            <li>Leg Press</li>
+                            <li>Calf Raises</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Arms -->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingArms">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseArms" aria-expanded="false" aria-controls="collapseArms">
+                        Arm Exercises
+                    </button>
+                </h2>
+                <div id="collapseArms" class="accordion-collapse collapse" aria-labelledby="headingArms" data-bs-parent="#exerciseAccordion">
+                    <div class="accordion-body">
+                        <ul>
+                            <li>Bicep Curls</li>
+                            <li>Tricep Dips</li>
+                            <li>Hammer Curls</li>
+                            <li>Tricep Pushdowns</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Shoulders -->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingShoulders">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseShoulders" aria-expanded="false" aria-controls="collapseShoulders">
+                        Shoulder Exercises
+                    </button>
+                </h2>
+                <div id="collapseShoulders" class="accordion-collapse collapse" aria-labelledby="headingShoulders" data-bs-parent="#exerciseAccordion">
+                    <div class="accordion-body">
+                        <ul>
+                            <li>Overhead Press</li>
+                            <li>Lateral Raises</li>
+                            <li>Front Raises</li>
+                            <li>Arnold Press</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-4">
+            <a href="/" class="btn btn-primary">Back to Home</a>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculate BMI</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="mb-4">Calculate Your BMI</h1>
+        <form method="POST">
+            <div class="mb-3">
+                <label for="weight" class="form-label">Weight (lbs)</label>
+                <input type="number" class="form-control" id="weight" name="weight" required>
+            </div>
+            <div class="mb-3">
+                <label for="height" class="form-label">Height (inches)</label>
+                <input type="number" class="form-control" id="height" name="height" required>
+            </div>
+            <button type="submit" class="btn btn-primary btn-lg">Calculate</button>
+            <a href="/" class="btn btn-secondary btn-lg">Cancel</a>
+        </form>
+
+        {% if bmi_result %}
+        <div class="alert alert-info mt-4">
+            <h4>BMI Result: {{ bmi_result.bmi }}</h4>
+            <p>You are in the <strong>{{ bmi_result.category }}</strong> category.</p>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>

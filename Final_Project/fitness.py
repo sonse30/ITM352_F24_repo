@@ -1,202 +1,137 @@
+#Using matplotlib for visual of the progress of the users over time w/ different workouts
+import matplotlib
+matplotlib.use('Agg')  # Use Agg backend for non-GUI plotting
+
 import csv
+#Datetime is used to track exact dates and times
 import datetime
 import os
+from flask import Flask, render_template, request, redirect, url_for
 import matplotlib.pyplot as plt
-#Using matplotlib for the graphs for the visual of progress for users
+from io import BytesIO
+import base64
+from collections import defaultdict
+
+# Flask App Initialization
+app = Flask(__name__)
 
 # Global Constants
 FILE_NAME = "workout_log.csv"
 
-# Functions for Logging Exercises
+# Ensure the log file exists
+if not os.path.exists(FILE_NAME):
+    with open(FILE_NAME, mode="w", newline="") as file:
+        writer = csv.writer(file)
+        writer.writerow(["Timestamp", "Exercise Type", "Sets", "Reps", "Weight (lbs)"])
+
+# Routes that is used for easy access of features
+@app.route('/')
+def home():
+    return render_template('index.html')
+
+#Logging is used for primarily gym goers who life weights. Our tracker features only weight, reps, and set tracking overtime.
+@app.route('/log', methods=['GET', 'POST'])
 def log_exercise():
-    print("\nLog New Exercise")
-    try:
-        exercise_type = input("Enter Exercise Type (e.g., Bicep Curls, Cardio): ").strip()
-        sets = input("Enter Number of Sets: ").strip()
-        reps = input("Enter Reps per Set (or duration in minutes for cardio): ").strip()
-        weight = input("Enter Weight per Rep (lbs, or leave blank for cardio): ").strip()
-        
+    if request.method == 'POST':
+        exercise_type = request.form['exercise_type']
+        sets = request.form['sets']
+        reps = request.form['reps']
+        weight = request.form['weight']
+
         if not sets.isdigit() or not reps.isdigit() or (weight and not weight.isdigit()):
-            print("Invalid input! Sets, reps, and weight should be numerical values.")
-            return
-        
-        # Add Timestamp
+            return "Invalid input! Sets, reps, and weight should be numerical values.", 4000
+
+        # Add Timestamp for graphs in later progress feature
         timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        
-        # Save to CSV
+
+        # Save to CSV file that is later used by the progress tracker
         with open(FILE_NAME, mode="a", newline="") as file:
-            writer = csv.writer(file)
-            writer.writerow([timestamp, exercise_type, sets, reps, weight])
-        
-        print("Exercise logged successfully!")
-    except Exception as e:
-        print(f"An error occurred: {e}")
+            writer = csv.writer(file) #Transfers log into file
+            writer.writerow([timestamp, exercise_type, sets, reps, weight]) #Set data points for use of the graphs
 
-# Functions for BMI Calculation using data on comparing weight to height for body mass (Male & Value variation in progress)
+        return redirect(url_for('home'))
+    return render_template('log.html')
+
+@app.route('/bmi', methods=['GET', 'POST'])
 def calculate_bmi():
-    print("\nCalculate BMI")
-    try:
-        weight = float(input("Enter your weight in lbs: "))
-        height = float(input("Enter your height in inches: "))
-        bmi = (weight / (height ** 2)) * 703
-        print(f"Your BMI is: {bmi:.2f}")
-        if bmi < 18.5:
-            print("You are in the underweight range1.")
-        elif 18.5 <= bmi <= 24.9:
-            print("You have a normal weight range.")
-        elif 25 <= bmi <= 29.9:
-            print("You are overweight.")
-        else:
-            print("You are in the obese range.")
-    except ValueError:
-        print("Invalid input! Please enter numerical values.")
+    bmi_result = None
+    if request.method == 'POST':
+        try:
+            weight = float(request.form['weight']) #Weight is used in lbs for US users
+            height = float(request.form['height']) #Height is measured in inches for exact calculations
+            bmi = (weight / (height ** 2)) * 703 #Formula used to correctly calculate standard BMI for adults
+            if bmi < 18.5:
+                category = "Underweight Range"
+            elif 18.5 <= bmi <= 24.9:
+                category = "Normal weight Range"
+            elif 25 <= bmi <= 29.9:
+                category = "Overweight Range"
+            else:
+                category = "Obese Range" #Obese range rather than exactly saying a user is obese. Making it less harsh.
+            bmi_result = {"bmi": round(bmi, 2), "category": category}
+        except ValueError:
+            return "Invalid input! Please enter numerical values.", 400 
+    return render_template('bmi.html', bmi_result=bmi_result)
 
-# Functions for Calories Burned (Using averages of MET, weight, and duration)
-def calculate_calories():
-    print("\nEstimate Calories Burned")
-    try:
-        weight = float(input("Enter your weight in lbs: "))
-        duration = float(input("Enter workout duration in minutes: "))
-        met = float(input("Enter MET value (use 6 for moderate intensity weightlifting): "))
-        # Convert weight from lbs to kg for calorie formula
-        weight_kg = weight / 2.20462
-        calories = (met * 3.5 * weight_kg / 200) * duration
-        print(f"Estimated Calories Burned: {calories:.2f} kcal")
-    except ValueError:
-        print("Invalid input! Please enter numerical values.")
-
-# View Progress and Visualization with a graph and automatically populates progress
+#Main appeal of code that allows users to track their progress overtime and see if they made any positve or negative change
+@app.route('/progress')
 def view_progress():
-    print("\nView Progress Report")
-    if not os.path.exists(FILE_NAME):
-        print("No workout data found. Log some exercises first!")
-        return
-    #Values for the graph that is shown for the progress
-    dates = []
-    weights = []
-    exercise_types = []
-    
-    with open(FILE_NAME, mode="r") as file:
-        reader = csv.reader(file)
-        next(reader)  # Skip header
-        for row in reader:
-            if row:
-                dates.append(row[0])
-                exercise_types.append(row[1])
-                weights.append(float(row[4]) if row[4] else 0)
-    
-    if not dates or not weights:
-        print("No data available for visualization.")
-        return
+    if not os.path.exists(FILE_NAME): #Defenisve code in case of error with input
+        return "No workout data found. Log some exercises first!"
 
-    # Plotting data points based on data inputted by user
-    plt.figure(figsize=(10, 5))
-    plt.plot(dates, weights, marker="o", label="Weight (lbs)")
-    plt.xlabel("Date")
-    plt.ylabel("Weight (lbs)")
-    plt.title("Progress Over Time")
-    plt.legend()
-    plt.grid()
-    plt.xticks(rotation=45)
-    plt.tight_layout()
-    plt.show()
+    try:
+        data = defaultdict(list)
+        dates = []
 
-# Weekly Summary
-def weekly_summary():
-    print("\nWeekly Summary")
-    if not os.path.exists(FILE_NAME):
-        print("No workout data found. Log some exercises first!")
-        return
+        with open(FILE_NAME, mode="r") as file:
+            reader = csv.reader(file)
+            next(reader)  # Skip header
+            for row in reader:
+                if len(row) < 5 or not row[4]:
+                    continue  # Skip rows with missing data
+                try:
+                    date = row[0]
+                    exercise_type = row[1]
+                    weight = float(row[4])
 
-    current_week = datetime.datetime.now().isocalendar()[1]
-    weekly_data = []
+                    if date not in dates: #Defensive code in case of possible errors
+                        dates.append(date)
+                    data[exercise_type].append((date, weight))
+                except ValueError:
+                    continue
 
-    with open(FILE_NAME, mode="r") as file:
-        reader = csv.reader(file)
-        next(reader)  # Skip header
-        for row in reader:
-            if row:
-                log_date = datetime.datetime.strptime(row[0], "%Y-%m-%d %H:%M:%S")
-                if log_date.isocalendar()[1] == current_week:
-                    weekly_data.append(row)
+        # Generate plots for each exercise type. No limit of which exercise the user wants to track progress of.
+        plots = {}
+        for exercise, values in data.items():
+            values.sort()  # Sort by date
+            exercise_dates, weights = zip(*values)
 
-    if not weekly_data:
-        print("No workouts logged for this week.")
-        return
+            # Plotting the data
+            plt.figure(figsize=(10, 5))
+            plt.plot(exercise_dates, weights, marker="o", label=f"{exercise} (lbs)")
+            plt.xlabel("Date") #Realtime data and time tracking
+            plt.ylabel("Weight (lbs)") 
+            plt.title(f"Progress for {exercise}")
+            plt.legend()
+            plt.grid()
+            plt.xticks(rotation=45)
+            plt.tight_layout()
 
-    total_sets = sum(int(row[2]) for row in weekly_data)
-    total_reps = sum(int(row[3]) for row in weekly_data)
-    total_weight = sum(float(row[4]) for row in weekly_data if row[4])
+            # Save plot as an image in base64 format
+            buffer = BytesIO()
+            plt.savefig(buffer, format='png')
+            buffer.seek(0)
+            image_base64 = base64.b64encode(buffer.getvalue()).decode('utf-8')
+            buffer.close()
+            plots[exercise] = image_base64
+            plt.close()
 
-    print(f"Workouts This Week: {len(weekly_data)}")
-    print(f"Total Sets: {total_sets}")
-    print(f"Total Reps: {total_reps}")
-    print(f"Total Weight Lifted: {total_weight:.2f} lbs")
+        return render_template('progress.html', plots=plots)
+    except Exception as e:
+        return f"An error occurred: {e}", 500   
+@app.route('/exercise-list')
+def exercise_list():
+    return render_template('exercise_list.html')
 
-# Filter Logs on specific exericises that user did (filter in progress for certain exercises)
-def filter_logs():
-    print("\nFilter Logs by Exercise Type")
-    if not os.path.exists(FILE_NAME):
-        print("No workout data found. Log some exercises first!")
-        return
-
-    exercise_type = input("Enter the exercise type to filter by: ").strip()
-    filtered_data = []
-
-    with open(FILE_NAME, mode="r") as file:
-        reader = csv.reader(file)
-        next(reader)  # Skip header
-        for row in reader:
-            if row and row[1].lower() == exercise_type.lower():
-                filtered_data.append(row)
-
-    if not filtered_data:
-        print(f"No logs found for exercise type: {exercise_type}")
-        return
-
-    print(f"Logs for {exercise_type}:")
-    for log in filtered_data:
-        print(f"{log[0]} | Sets: {log[2]}, Reps: {log[3]}, Weight: {log[4]} lbs")
-
-# Main Menu display of different features in the program
-def main_menu():
-    while True:
-        print("\nFitness Tracker")
-        print("1. Log Exercise")
-        print("2. Calculate BMI")
-        print("3. Estimate Calories Burned")
-        print("4. View Progress Report")
-        print("5. Weekly Summary")
-        print("6. Filter Logs by Exercise Type")
-        print("7. Exit")
-        
-        choice = input("Enter your choice: ").strip()
-        
-        if choice == "1":
-            log_exercise()
-        elif choice == "2":
-            calculate_bmi()
-        elif choice == "3":
-            calculate_calories()
-        elif choice == "4":
-            view_progress()
-        elif choice == "5":
-            weekly_summary()
-        elif choice == "6":
-            filter_logs()
-        elif choice == "7":
-            print("Exiting program. Stay healthy & have a great rest of your day!")
-            break
-        else:
-            print("Invalid choice. Please select a valid option.")
-
-# Entry Point
 if __name__ == "__main__":
-    # Ensure the log file exists
-    if not os.path.exists(FILE_NAME):
-        with open(FILE_NAME, mode="w", newline="") as file:
-            writer = csv.writer(file)
-            writer.writerow(["Timestamp", "Exercise Type", "Sets", "Reps", "Weight (lbs)"])
-    
-    # Run the main menu
-    main_menu()
+    app.run(debug=True)
