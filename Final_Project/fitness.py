@@ -1,7 +1,6 @@
 #Using matplotlib for visual of the progress of the users over time w/ different workouts
 import matplotlib
 matplotlib.use('Agg')  # Use Agg backend for non-GUI plotting
-
 import csv
 #Datetime is used to track exact dates and times
 import datetime
