@@ -13,10 +13,19 @@
             {% for q in category_questions %}
                 <div>
                     <p>{{ q['question'] }}</p>
-                    {% for option in q['options'] %}
-                        <input type="radio" name="question_{{ q['question'] }}" value="{{ option }}">
-                        <label>{{ option }}</label><br>
-                    {% endfor %}
+                    {% if q['correct']|length > 1 %}
+                        <!-- Use checkboxes for multiple-answer questions -->
+                        {% for option in q['options'] %}
+                            <input type="checkbox" name="question_{{ category }}_{{ loop.index }}" value="{{ option }}">
+                            <label>{{ option }}</label><br>
+                        {% endfor %}
+                    {% else %}
+                        <!-- Use radio buttons for single-answer questions -->
+                        {% for option in q['options'] %}
+                            <input type="radio" name="question_{{ category }}_{{ loop.index }}" value="{{ option }}">
+                            <label>{{ option }}</label><br>
+                        {% endfor %}
+                    {% endif %}
                 </div>
             {% endfor %}
         {% endfor %}
