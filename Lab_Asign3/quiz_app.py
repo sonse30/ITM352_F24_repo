@@ -102,22 +102,6 @@ def result():
     return render_template('result.html', score=score, total_questions=total_questions, explanations=explanations)
 
 # This function loads the leaderboard data from the JSON file.
-def load_questions():
-    try:
-        with open('questions.json') as f:
-            return json.load(f)
-    except (FileNotFoundError, json.JSONDecodeError):
-        return {}
-
-def load_leaderboard():
-    try:
-        if os.path.exists('leaderboard.json'):
-            with open('leaderboard.json') as f:
-                return json.load(f)
-    except json.JSONDecodeError:
-        return []
-    return []
-
 # This route displays the leaderboard page and showcases who is on the ledaerboard currently
 @app.route('/leaderboard')
 def leaderboard():
