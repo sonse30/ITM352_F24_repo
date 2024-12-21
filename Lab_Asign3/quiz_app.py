@@ -102,16 +102,21 @@ def result():
     return render_template('result.html', score=score, total_questions=total_questions, explanations=explanations)
 
 # This function loads the leaderboard data from the JSON file.
-def load_leaderboard():
-    if os.path.exists('leaderboard.json'):
-        with open('leaderboard.json') as f:
+def load_questions():
+    try:
+        with open('questions.json') as f:
             return json.load(f)
-    return []
+    except (FileNotFoundError, json.JSONDecodeError):
+        return {}
 
-# This function saves the updated leaderboard data to the JSON file.
-def save_leaderboard(leaderboard_data):
-    with open('leaderboard.json', 'w') as f:
-        json.dump(leaderboard_data, f)
+def load_leaderboard():
+    try:
+        if os.path.exists('leaderboard.json'):
+            with open('leaderboard.json') as f:
+                return json.load(f)
+    except json.JSONDecodeError:
+        return []
+    return []
 
 # This route displays the leaderboard page and showcases who is on the ledaerboard currently
 @app.route('/leaderboard')
