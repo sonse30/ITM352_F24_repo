@@ -9,23 +9,16 @@
     <h1>Take the Quiz!</h1>
     <form action="{{ url_for('quiz') }}" method="POST">
         {% for category, category_questions in questions.items() %}
-            <h3>{{ category }}</h3>
+            <h2>{{ category }}</h2>
             {% for q in category_questions %}
                 <div>
                     <p>{{ q['question'] }}</p>
-                    {% if q['correct']|length > 1 %}
-                        <!-- Use checkboxes for multiple-answer questions -->
-                        {% for option in q['options'] %}
-                            <input type="checkbox" name="question_{{ category }}_{{ loop.index }}" value="{{ option }}">
-                            <label>{{ option }}</label><br>
-                        {% endfor %}
-                    {% else %}
-                        <!-- Use radio buttons for single-answer questions -->
-                        {% for option in q['options'] %}
-                            <input type="radio" name="question_{{ category }}_{{ loop.index }}" value="{{ option }}">
-                            <label>{{ option }}</label><br>
-                        {% endfor %}
-                    {% endif %}
+                    {% for option in q['options'] %}
+                        <label>
+                            <input type="radio" name="question_{{ loop.index0 }}" value="{{ option }}">
+                            {{ option }}
+                        </label><br>
+                    {% endfor %}
                 </div>
             {% endfor %}
         {% endfor %}
